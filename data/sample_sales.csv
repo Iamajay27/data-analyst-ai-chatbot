@@ -1,0 +1,11 @@
+order_id,date,customer,city,category,product,quantity,sales,profit
+1001,2026-01-01,Aarav,Bhopal,Electronics,Phone,1,42000,6000
+1002,2026-01-08,Diya,Indore,Clothing,Jacket,2,3500,700
+1003,2026-01-15,Kabir,Bhopal,Electronics,Laptop,1,68000,9000
+1004,2026-01-22,Meera,Jabalpur,Furniture,Chair,4,12000,2200
+1005,2026-01-29,Rohan,Indore,Clothing,Shoes,2,5000,900
+1006,2026-02-05,Isha,Bhopal,Furniture,Desk,1,18000,3200
+1007,2026-02-12,Vivaan,Jabalpur,Electronics,Headphones,3,9000,1800
+1008,2026-02-19,Anaya,Indore,Clothing,Shirt,3,4500,800
+1009,2026-02-26,Arjun,Bhopal,Furniture,Table,1,15000,2500
+1010,2026-03-05,Sara,Jabalpur,Electronics,Monitor,2,24000,4200
