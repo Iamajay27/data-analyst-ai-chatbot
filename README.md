@@ -145,3 +145,34 @@ This project helped me practice data cleaning, SQL, prompt design, safe query ex
 - Add richer anomaly detection
 - Add chart export
 - Add schema-aware conversation memory
+
+## AI + Local Pandas/SQL Fallback
+
+The chatbot now has a two-layer answering strategy:
+
+1. **AI + SQLite mode** — when the OpenAI API is available, natural-language questions are converted to safe read-only SQL and executed against SQLite.
+2. **Local Pandas fallback** — if the API key is missing, credits are exhausted, the API is unavailable, or a supported basic question can be answered locally, the app uses Pandas without making an API call.
+
+Supported local questions include:
+
+- average / avg / mean
+- total / sum
+- count / how many
+- max / highest
+- min / lowest
+- basic group-by questions such as `average sales by city`
+- simple value filters such as `total sales from Mumbai`
+
+Example:
+
+```text
+What is the average Age?
+```
+
+If the API returns a quota error, the application can calculate the answer directly from the uploaded DataFrame and show a **Local Pandas fallback** indicator.
+
+### Run tests
+
+```bash
+pytest -v
+```

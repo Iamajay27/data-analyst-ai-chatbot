@@ -212,7 +212,9 @@ elif page == "AI Chatbot":
     st.caption("Ask questions about the uploaded data. AI-generated SQL is validated before execution.")
 
     if not ai_enabled:
-        st.info("Add `OPENAI_API_KEY` to your `.env` file to enable natural-language questions.")
+        st.info("AI API is not enabled. Basic analytics such as average, sum, count, max, min, and group-by still work locally with Pandas.")
+    else:
+        st.success("AI mode is enabled. If the API is unavailable or out of credits, supported basic questions automatically use the local Pandas fallback.")
 
     suggestions = []
     numeric = list(df.select_dtypes(include="number").columns)
@@ -235,7 +237,7 @@ elif page == "AI Chatbot":
                 with st.expander("SQL used"):
                     st.code(msg["sql"], language="sql")
 
-    question = st.chat_input("Ask a question about your data", disabled=not ai_enabled)
+    question = st.chat_input("Ask a question about your data")
     if question:
         st.session_state.messages.append({"role": "user", "content": question})
         with st.chat_message("user"):
@@ -243,12 +245,16 @@ elif page == "AI Chatbot":
 
         with st.chat_message("assistant"):
             try:
-                sql, result, explanation = ask_data(
+                sql, result, explanation, mode = ask_data(
                     question,
                     DB_PATH,
                     st.session_state.table_name,
                     df
                 )
+                if mode.startswith("local_pandas"):
+                    st.info("🟢 Local Pandas fallback used — no API credits were required for this question.")
+                else:
+                    st.info("🔵 AI + SQLite mode used.")
                 st.markdown(explanation)
                 st.dataframe(result, use_container_width=True)
                 fig = auto_chart(result, question)
